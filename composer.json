@@ -1,0 +1,14 @@
+{
+    "config": {
+        "platform": {
+            "php": "8.2.0"
+        }
+    },
+    "require-dev": {
+        "shipmonk/phpstan-rules": "^1.2",
+        "phpunit/phpunit": "^9.6"
+    },
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan analyze -c rules.neon"
+    }
+}
