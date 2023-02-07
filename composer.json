@@ -8,6 +8,11 @@
         "shipmonk/phpstan-rules": "^1.2",
         "phpunit/phpunit": "^9.6"
     },
+    "autoload": {
+        "psr-0": {
+            "List": "src"
+        }
+    },
     "scripts": {
         "phpstan": "vendor/bin/phpstan analyze -c rules.neon"
     }

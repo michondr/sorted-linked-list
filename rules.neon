@@ -6,4 +6,4 @@ parameters:
 
 includes:
     - vendor/shipmonk/phpstan-rules/rules.neon
-
+    - phpstan-baseline.neon
