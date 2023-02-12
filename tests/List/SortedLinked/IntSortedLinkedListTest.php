@@ -5,6 +5,9 @@ namespace List\SortedLinked;
 
 use Generator;
 use List\LinkedListItem;
+use List\ValueComparison\Strategy\AscendingIntegerStrategy;
+use List\ValueComparison\Strategy\DescendingIntegerStrategy;
+use List\ValueComparison\ValueComparisonStrategyInterface;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
@@ -14,11 +17,15 @@ class IntSortedLinkedListTest extends TestCase
 	public function toValueDataProvider(): Generator
 	{
 		yield 'empty list' => [
-			'list' => new IntSortedLinkedList(null),
+			'list' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
+				null
+			),
 			'expectedResult' => [],
 		];
 		yield 'ascending list' => [
 			'list' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -34,6 +41,7 @@ class IntSortedLinkedListTest extends TestCase
 		];
 		yield 'descending list' => [
 			'list' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					10,
 					new LinkedListItem(
@@ -52,6 +60,7 @@ class IntSortedLinkedListTest extends TestCase
 		];
 		yield 'list with duplicate values in ascending order' => [
 			'list' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					10,
 					new LinkedListItem(
@@ -85,46 +94,102 @@ class IntSortedLinkedListTest extends TestCase
 		);
 	}
 
-	public function testAddBeforeInAsc(): void
+	public function addBeforeDataProvider(): Generator
 	{
-		$list = IntSortedLinkedList::createEmpty()
+		yield 'ascending' => [
+			'strategy' => new AscendingIntegerStrategy(),
+			'expectedResult' => [-3, 1]
+		];
+		yield 'descending' => [
+			'strategy' => new DescendingIntegerStrategy(),
+			'expectedResult' => [1, -3]
+		];
+	}
+
+	/**
+	 * @dataProvider addBeforeDataProvider
+	 * @param array<int> $expectedResult
+	 */
+	public function testAddBefore(
+		ValueComparisonStrategyInterface $strategy,
+		array $expectedResult,
+	): void
+	{
+		$list = IntSortedLinkedList::createEmpty($strategy)
 			->add(1)
 			->add(-3);
 
 		Assert::assertSame(
-			[-3, 1],
+			$expectedResult,
 			$list->toValueArray(),
 		);
 	}
 
-
-	public function testAddAfterInAsc(): void
+	public function addAfterDataProvider(): Generator
 	{
-		$list = IntSortedLinkedList::createEmpty()
+		yield 'ascending' => [
+			'strategy' => new AscendingIntegerStrategy(),
+			'expectedResult' => [1, 5]
+		];
+		yield 'descending' => [
+			'strategy' => new DescendingIntegerStrategy(),
+			'expectedResult' => [5, 1]
+		];
+	}
+
+	/**
+	 * @dataProvider addAfterDataProvider
+	 * @param array<int> $expectedResult
+	 */
+	public function testAddAfter(
+		ValueComparisonStrategyInterface $strategy,
+		array $expectedResult,
+	): void
+	{
+		$list = IntSortedLinkedList::createEmpty($strategy)
 			->add(1)
 			->add(5);
 
 		Assert::assertSame(
-			[1, 5],
+			$expectedResult,
 			$list->toValueArray(),
 		);
 	}
 
-	public function testAddDuplicate(): void
+	public function addDuplicateDataProvider(): Generator
 	{
-		$list = IntSortedLinkedList::createEmpty()
+		yield 'ascending' => [
+			'strategy' => new AscendingIntegerStrategy(),
+			'expectedResult' => [1, 1]
+		];
+		yield 'descending' => [
+			'strategy' => new DescendingIntegerStrategy(),
+			'expectedResult' => [1, 1]
+		];
+	}
+
+	/**
+	 * @dataProvider addDuplicateDataProvider
+	 * @param array<int> $expectedResult
+	 */
+	public function testAddDuplicate(
+		ValueComparisonStrategyInterface $strategy,
+		array $expectedResult,
+	): void
+	{
+		$list = IntSortedLinkedList::createEmpty($strategy)
 			->add(1)
 			->add(1);
 
 		Assert::assertSame(
-			[1, 1],
+			$expectedResult,
 			$list->toValueArray(),
 		);
 	}
 
 	public function testAddGradually(): void
 	{
-		$list = IntSortedLinkedList::createEmpty();
+		$list = IntSortedLinkedList::createEmpty(new AscendingIntegerStrategy());
 
 		$list = $list->add(0);
 
@@ -172,7 +237,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testAddMultiple(): void
 	{
-		$list = IntSortedLinkedList::createEmpty()
+		$list = IntSortedLinkedList::createEmpty(new AscendingIntegerStrategy())
 			->add(1)
 			->add(1)
 			->add(0)
@@ -191,7 +256,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testHasValue(): void
 	{
-		$list = IntSortedLinkedList::createEmpty()
+		$list = IntSortedLinkedList::createEmpty(new AscendingIntegerStrategy())
 			->add(1)
 			->add(-100)
 			->add(30);
@@ -210,17 +275,22 @@ class IntSortedLinkedListTest extends TestCase
 	{
 		yield 'list with single item' => [
 			'list' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					3,
 					null
 				)
 			),
 			'valueToRemove' => 3,
-			'expectedResult' => new IntSortedLinkedList(null)
+			'expectedResult' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
+				null
+			)
 		];
 
 		yield 'remove from the start' => [
 			'list' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -234,6 +304,7 @@ class IntSortedLinkedListTest extends TestCase
 			),
 			'valueToRemove' => -3,
 			'expectedResult' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					0,
 					new LinkedListItem(
@@ -245,6 +316,7 @@ class IntSortedLinkedListTest extends TestCase
 		];
 		yield 'remove from the middle' => [
 			'list' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -258,6 +330,7 @@ class IntSortedLinkedListTest extends TestCase
 			),
 			'valueToRemove' => 0,
 			'expectedResult' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -269,6 +342,7 @@ class IntSortedLinkedListTest extends TestCase
 		];
 		yield 'remove from the end' => [
 			'list' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -282,6 +356,7 @@ class IntSortedLinkedListTest extends TestCase
 			),
 			'valueToRemove' => 5,
 			'expectedResult' => new IntSortedLinkedList(
+				new AscendingIntegerStrategy(),
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -313,7 +388,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testRemoveMultiple(): void
 	{
-		$list = IntSortedLinkedList::createEmpty()
+		$list = IntSortedLinkedList::createEmpty(new AscendingIntegerStrategy())
 			->add(1)
 			->add(1)
 			->add(2)
@@ -327,6 +402,7 @@ class IntSortedLinkedListTest extends TestCase
 			->remove(-10);
 
 		$expectedList = new IntSortedLinkedList(
+			new AscendingIntegerStrategy(),
 			new LinkedListItem(
 				1,
 				new LinkedListItem(
@@ -341,7 +417,7 @@ class IntSortedLinkedListTest extends TestCase
 
 		Assert::assertEquals(
 			$expectedList,
-			$listWithRemovedItems
+			$listWithRemovedItems,
 		);
 	}
 
@@ -350,7 +426,7 @@ class IntSortedLinkedListTest extends TestCase
 		$this->expectException(\InvalidArgumentException::class);
 		$this->expectExceptionMessage('list does not have value 100');
 
-		$list = IntSortedLinkedList::createEmpty();
+		$list = IntSortedLinkedList::createEmpty(new AscendingIntegerStrategy());
 
 		$list->remove(100);
 	}
@@ -361,6 +437,7 @@ class IntSortedLinkedListTest extends TestCase
 		$this->expectExceptionMessage('list does not have value 100');
 
 		$list = new IntSortedLinkedList(
+			new AscendingIntegerStrategy(),
 			new LinkedListItem(
 				20,
 				null

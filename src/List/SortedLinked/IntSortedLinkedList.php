@@ -3,19 +3,22 @@
 namespace List\SortedLinked;
 
 use List\LinkedListItem;
+use List\ValueComparison\ComparisonOutcomeEnum;
+use List\ValueComparison\ValueComparisonStrategyInterface;
 
 readonly class IntSortedLinkedList
 {
 
 	public function __construct(
+		private ValueComparisonStrategyInterface $comparisonStrategy,
 		private ?LinkedListItem $firstItem,
 	)
 	{
 	}
 
-	public static function createEmpty(): self
+	public static function createEmpty(ValueComparisonStrategyInterface $comparisonStrategy): self
 	{
-		return new self(null);
+		return new self($comparisonStrategy, null);
 	}
 
 	/**
@@ -36,12 +39,16 @@ readonly class IntSortedLinkedList
 	{
 		if ($this->firstItem === null) {
 			return new self(
+				$this->comparisonStrategy,
 				new LinkedListItem($value, null)
 			);
 		}
 
-		if ($value <= $this->firstItem->getValue()) {
+		$isLessOrEqualToFirstItem = $this->comparisonStrategy->compareValues($value, $this->firstItem->getValue())->isLessOrEqual();
+
+		if ($isLessOrEqualToFirstItem) {
 			return new self(
+				$this->comparisonStrategy,
 				new LinkedListItem($value, $this->firstItem)
 			);
 		}
@@ -51,10 +58,10 @@ readonly class IntSortedLinkedList
 		while ($current !== null) {
 
 			$isLast = $current->getNextItem() === null;
-			$isMoreThanCurrent = $value > $current->getValue();
-			$isLessThanNext = $current->getNextItem() !== null && $value <= $current->getNextItem()->getValue();
+			$isMoreThanCurrent = $this->comparisonStrategy->compareValues($value, $current->getValue())->isMore();
+			$isLessOrEqualToNext = $current->getNextItem() !== null && $this->comparisonStrategy->compareValues($value, $current->getNextItem()->getValue())->isLessOrEqual();
 
-			if ($isMoreThanCurrent && ($isLessThanNext || $isLast)) {
+			if ($isMoreThanCurrent && ($isLessOrEqualToNext || $isLast)) {
 				$current->setNextItem(
 					new LinkedListItem(
 						$value,
@@ -76,15 +83,18 @@ readonly class IntSortedLinkedList
 			throw new \InvalidArgumentException('list does not have value ' . $value);
 		}
 
-		if ($this->firstItem !== null && $this->firstItem->getValue() === $value) {
-			return new self($this->firstItem->getNextItem());
+		if ($this->firstItem !== null && $value === $this->firstItem->getValue()) {
+			return new self(
+				$this->comparisonStrategy,
+				$this->firstItem->getNextItem()
+			);
 		}
 
 		$previous = null;
 		$current = $this->firstItem;
 		while ($current !== null) {
 
-			if ($current->getValue() === $value) {
+			if ($value === $current->getValue()) {
 				assert($previous !== null);
 
 				$previous->setNextItem($current->getNextItem());
