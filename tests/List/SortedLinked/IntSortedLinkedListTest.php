@@ -58,7 +58,7 @@ class IntSortedLinkedListTest extends TestCase
 			),
 			'expectedResult' => [10, 3, -42, -100]
 		];
-		yield 'list with duplicate values in ascending order' => [
+		yield 'list with duplicate values in descending order' => [
 			'list' => new IntSortedLinkedList(
 				new AscendingIntegerStrategy(),
 				new LinkedListItem(
