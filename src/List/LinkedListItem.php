@@ -13,7 +13,7 @@ class LinkedListItem
 	{
 	}
 
-	public function setNextItem(LinkedListItem $nextItem): void
+	public function setNextItem(?LinkedListItem $nextItem): void
 	{
 		$this->nextItem = $nextItem;
 	}

@@ -75,7 +75,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	/**
 	 * @dataProvider toValueDataProvider
-	 * @param array<int, LinkedListItem> $expectedResult
+	 * @param array<int> $expectedResult
 	 */
 	public function testToValueArray(IntSortedLinkedList $list, array $expectedResult): void
 	{
@@ -206,4 +206,167 @@ class IntSortedLinkedListTest extends TestCase
 		Assert::assertFalse($list->hasValue(300));
 	}
 
+	public function removeDataProvider(): Generator
+	{
+		yield 'list with single item' => [
+			'list' => new IntSortedLinkedList(
+				new LinkedListItem(
+					3,
+					null
+				)
+			),
+			'valueToRemove' => 3,
+			'expectedResult' => new IntSortedLinkedList(null)
+		];
+
+		yield 'remove from the start' => [
+			'list' => new IntSortedLinkedList(
+				new LinkedListItem(
+					-3,
+					new LinkedListItem(
+						0,
+						new LinkedListItem(
+							5,
+							null
+						)
+					)
+				)
+			),
+			'valueToRemove' => -3,
+			'expectedResult' => new IntSortedLinkedList(
+				new LinkedListItem(
+					0,
+					new LinkedListItem(
+						5,
+						null
+					)
+				)
+			)
+		];
+		yield 'remove from the middle' => [
+			'list' => new IntSortedLinkedList(
+				new LinkedListItem(
+					-3,
+					new LinkedListItem(
+						0,
+						new LinkedListItem(
+							5,
+							null
+						)
+					)
+				)
+			),
+			'valueToRemove' => 0,
+			'expectedResult' => new IntSortedLinkedList(
+				new LinkedListItem(
+					-3,
+					new LinkedListItem(
+						5,
+						null
+					)
+				)
+			)
+		];
+		yield 'remove from the end' => [
+			'list' => new IntSortedLinkedList(
+				new LinkedListItem(
+					-3,
+					new LinkedListItem(
+						0,
+						new LinkedListItem(
+							5,
+							null
+						)
+					)
+				)
+			),
+			'valueToRemove' => 5,
+			'expectedResult' => new IntSortedLinkedList(
+				new LinkedListItem(
+					-3,
+					new LinkedListItem(
+						0,
+						null
+					)
+				)
+			)
+		];
+	}
+
+	/**
+	 * @dataProvider removeDataProvider
+	 */
+	public function testRemove(IntSortedLinkedList $list, int $valueToRemove, IntSortedLinkedList $expectedResult): void
+	{
+		Assert::assertNotEquals(
+			$list,
+			$expectedResult,
+		);
+
+		$list = $list->remove($valueToRemove);
+
+		Assert::assertEquals(
+			$expectedResult,
+			$list,
+		);
+	}
+
+	public function testRemoveMultiple(): void
+	{
+		$list = IntSortedLinkedList::createEmpty()
+			->add(1)
+			->add(1)
+			->add(2)
+			->add(3)
+			->add(-10)
+			->add(10);
+
+		$listWithRemovedItems = $list
+			->remove(1)
+			->remove(2)
+			->remove(-10);
+
+		$expectedList = new IntSortedLinkedList(
+			new LinkedListItem(
+				1,
+				new LinkedListItem(
+					3,
+					new LinkedListItem(
+						10,
+						null
+					)
+				)
+			)
+		);
+
+		Assert::assertEquals(
+			$expectedList,
+			$listWithRemovedItems
+		);
+	}
+
+	public function testRemoveWithNoItems(): void
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('list does not have value 100');
+
+		$list = IntSortedLinkedList::createEmpty();
+
+		$list->remove(100);
+	}
+
+	public function testRemoveWithMissingValue(): void
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('list does not have value 100');
+
+		$list = new IntSortedLinkedList(
+			new LinkedListItem(
+				20,
+				null
+			)
+		);
+
+		$list->remove(100);
+	}
 }

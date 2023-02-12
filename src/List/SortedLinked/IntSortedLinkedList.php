@@ -70,6 +70,33 @@ readonly class IntSortedLinkedList
 		return $this;
 	}
 
+	public function remove(int $value): self
+	{
+		if ($this->hasValue($value) === false) {
+			throw new \InvalidArgumentException('list does not have value ' . $value);
+		}
+
+		if ($this->firstItem !== null && $this->firstItem->getValue() === $value) {
+			return new self($this->firstItem->getNextItem());
+		}
+
+		$previous = null;
+		$current = $this->firstItem;
+		while ($current !== null) {
+
+			if ($current->getValue() === $value) {
+				assert($previous !== null);
+
+				$previous->setNextItem($current->getNextItem());
+			}
+
+			$previous = $current;
+			$current = $current->getNextItem();
+		}
+
+		return $this;
+	}
+
 	public function hasValue(int $value): bool
 	{
 		return in_array($value, $this->toValueArray());
