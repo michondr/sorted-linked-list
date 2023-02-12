@@ -70,6 +70,11 @@ readonly class IntSortedLinkedList
 		return $this;
 	}
 
+	public function hasValue(int $value): bool
+	{
+		return in_array($value, $this->toValueArray());
+	}
+
 	/**
 	 * @return \Generator<int, LinkedListItem>
 	 */

@@ -189,4 +189,21 @@ class IntSortedLinkedListTest extends TestCase
 		);
 	}
 
+	public function testHasValue(): void
+	{
+		$list = IntSortedLinkedList::createEmpty()
+			->add(1)
+			->add(-100)
+			->add(30);
+
+		Assert::assertTrue($list->hasValue(1));
+		Assert::assertTrue($list->hasValue(-100));
+		Assert::assertTrue($list->hasValue(30));
+
+		Assert::assertFalse($list->hasValue(-30));
+		Assert::assertFalse($list->hasValue(100));
+		Assert::assertFalse($list->hasValue(0));
+		Assert::assertFalse($list->hasValue(300));
+	}
+
 }
