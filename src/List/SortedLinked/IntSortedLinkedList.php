@@ -3,7 +3,6 @@
 namespace List\SortedLinked;
 
 use List\LinkedListItem;
-use List\ValueComparison\ComparisonOutcomeEnum;
 use List\ValueComparison\ValueComparisonStrategyInterface;
 
 readonly class IntSortedLinkedList
@@ -120,7 +119,7 @@ readonly class IntSortedLinkedList
 		if ($this->firstItem !== null) {
 			foreach ($this->firstItem->yieldWithNext() as $value => $item) {
 				assert(is_int($value));
-				
+
 				yield $value => $item;
 			}
 		}
