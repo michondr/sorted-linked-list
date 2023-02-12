@@ -119,6 +119,8 @@ readonly class IntSortedLinkedList
 	{
 		if ($this->firstItem !== null) {
 			foreach ($this->firstItem->yieldWithNext() as $value => $item) {
+				assert(is_int($value));
+				
 				yield $value => $item;
 			}
 		}

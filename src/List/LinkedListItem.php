@@ -7,7 +7,7 @@ use Generator;
 class LinkedListItem
 {
 	public function __construct(
-		private readonly int $value,
+		private readonly int|string $value,
 		private ?self $nextItem,
 	)
 	{
@@ -19,7 +19,7 @@ class LinkedListItem
 	}
 
 	/**
-	 * @return \Generator<int, LinkedListItem>
+	 * @return \Generator<int|string, LinkedListItem>
 	 */
 	public function yieldWithNext(): Generator
 	{
