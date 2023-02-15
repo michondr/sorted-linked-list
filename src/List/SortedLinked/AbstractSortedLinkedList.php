@@ -40,7 +40,10 @@ abstract class AbstractSortedLinkedList
             return $this;
         }
 
-        $isLessOrEqualToFirstItem = $this->comparisonStrategy->compareValues($value, $this->firstItem->getValue())->isLessOrEqual();
+        $isLessOrEqualToFirstItem = $this->comparisonStrategy->compareValues(
+            $value,
+            $this->firstItem->getValue(),
+        )->isLessOrEqual();
 
         if ($isLessOrEqualToFirstItem) {
             $this->firstItem = new LinkedListItem($value, $this->firstItem);
@@ -52,7 +55,11 @@ abstract class AbstractSortedLinkedList
         while ($current !== null) {
             $isLast = $current->getNextItem() === null;
             $isMoreThanCurrent = $this->comparisonStrategy->compareValues($value, $current->getValue())->isMore();
-            $isLessOrEqualToNext = $current->getNextItem() !== null && $this->comparisonStrategy->compareValues($value, $current->getNextItem()->getValue())->isLessOrEqual();
+            $isLessOrEqualToNext = $current->getNextItem() !== null
+                && $this->comparisonStrategy->compareValues(
+                    $value,
+                    $current->getNextItem()->getValue(),
+                )->isLessOrEqual();
 
             if ($isMoreThanCurrent && ($isLessOrEqualToNext || $isLast)) {
                 $current->setNextItem(
