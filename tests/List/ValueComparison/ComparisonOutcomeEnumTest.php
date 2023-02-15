@@ -11,7 +11,7 @@ class ComparisonOutcomeEnumTest extends TestCase
     public function testIsLessOrEqual(): void
     {
         $more = ComparisonOutcomeEnum::MORE;
-        $same = ComparisonOutcomeEnum::SAME;
+        $same = ComparisonOutcomeEnum::EQUALS;
         $less = ComparisonOutcomeEnum::LESS;
 
         Assert::assertFalse($more->isLessOrEqual());
@@ -22,7 +22,7 @@ class ComparisonOutcomeEnumTest extends TestCase
     public function testIsSame(): void
     {
         $more = ComparisonOutcomeEnum::MORE;
-        $same = ComparisonOutcomeEnum::SAME;
+        $same = ComparisonOutcomeEnum::EQUALS;
         $less = ComparisonOutcomeEnum::LESS;
 
         Assert::assertFalse($more->isSame());
@@ -33,7 +33,7 @@ class ComparisonOutcomeEnumTest extends TestCase
     public function testIsMore(): void
     {
         $more = ComparisonOutcomeEnum::MORE;
-        $same = ComparisonOutcomeEnum::SAME;
+        $same = ComparisonOutcomeEnum::EQUALS;
         $less = ComparisonOutcomeEnum::LESS;
 
         Assert::assertTrue($more->isMore());

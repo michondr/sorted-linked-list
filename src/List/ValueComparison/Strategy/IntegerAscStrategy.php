@@ -14,7 +14,7 @@ class IntegerAscStrategy implements ValueComparisonStrategyInterface
 
         return match ($first <=> $second) {
             -1 => ComparisonOutcomeEnum::LESS,
-            0 => ComparisonOutcomeEnum::SAME,
+            0 => ComparisonOutcomeEnum::EQUALS,
             1 => ComparisonOutcomeEnum::MORE,
         };
     }

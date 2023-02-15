@@ -14,7 +14,7 @@ class IntegerAscStrategyTest extends TestCase
         yield 'values are equal' => [
             'firstValue' => 1,
             'secondValue' => 1,
-            'expectedResult' => ComparisonOutcomeEnum::SAME,
+            'expectedResult' => ComparisonOutcomeEnum::EQUALS,
         ];
         yield 'first value is more' => [
             'firstValue' => 3,

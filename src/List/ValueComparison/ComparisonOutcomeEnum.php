@@ -5,12 +5,12 @@ namespace List\ValueComparison;
 enum ComparisonOutcomeEnum
 {
     case LESS;
-    case SAME;
+    case EQUALS;
     case MORE;
 
     public function isLessOrEqual(): bool
     {
-        return $this === self::LESS || $this === self::SAME;
+        return $this === self::LESS || $this === self::EQUALS;
     }
 
     public function isMore(): bool
@@ -20,6 +20,6 @@ enum ComparisonOutcomeEnum
 
     public function isSame(): bool
     {
-        return $this === self::SAME;
+        return $this === self::EQUALS;
     }
 }
