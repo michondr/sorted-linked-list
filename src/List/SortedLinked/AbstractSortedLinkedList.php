@@ -5,23 +5,21 @@ namespace List\SortedLinked;
 use List\LinkedListItem;
 use List\ValueComparison\ValueComparisonStrategyInterface;
 
-readonly class StringSortedLinkedList
+/**
+ * @template ListValueType of string|int
+ */
+abstract class AbstractSortedLinkedList
 {
 
 	public function __construct(
-		private ValueComparisonStrategyInterface $comparisonStrategy,
+		private readonly ValueComparisonStrategyInterface $comparisonStrategy,
 		private ?LinkedListItem $firstItem,
 	)
 	{
 	}
 
-	public static function createEmpty(ValueComparisonStrategyInterface $comparisonStrategy): self
-	{
-		return new self($comparisonStrategy, null);
-	}
-
 	/**
-	 * @return array<string>
+	 * @return array<ListValueType>
 	 */
 	public function toValueArray(): array
 	{
@@ -34,22 +32,21 @@ readonly class StringSortedLinkedList
 		return $values;
 	}
 
-	public function add(string $value): self
+	/**
+	 * @param ListValueType $value
+	 */
+	public function add($value): static
 	{
 		if ($this->firstItem === null) {
-			return new self(
-				$this->comparisonStrategy,
-				new LinkedListItem($value, null)
-			);
+			$this->firstItem = new LinkedListItem($value, null);
+			return $this;
 		}
 
 		$isLessOrEqualToFirstItem = $this->comparisonStrategy->compareValues($value, $this->firstItem->getValue())->isLessOrEqual();
 
 		if ($isLessOrEqualToFirstItem) {
-			return new self(
-				$this->comparisonStrategy,
-				new LinkedListItem($value, $this->firstItem)
-			);
+			$this->firstItem = new LinkedListItem($value, $this->firstItem);
+			return $this;
 		}
 
 
@@ -76,17 +73,18 @@ readonly class StringSortedLinkedList
 		return $this;
 	}
 
-	public function remove(string $value): self
+	/**
+	 * @param ListValueType $value
+	 */
+	public function remove($value): static
 	{
 		if ($this->hasValue($value) === false) {
 			throw new \InvalidArgumentException('list does not have value ' . $value);
 		}
 
 		if ($this->firstItem !== null && $value === $this->firstItem->getValue()) {
-			return new self(
-				$this->comparisonStrategy,
-				$this->firstItem->getNextItem()
-			);
+			$this->firstItem = $this->firstItem->getNextItem();
+			return $this;
 		}
 
 		$previous = null;
@@ -106,20 +104,23 @@ readonly class StringSortedLinkedList
 		return $this;
 	}
 
-	public function hasValue(string $value): bool
+	/**
+	 * @param ListValueType $value
+	 */
+	public function hasValue($value): bool
 	{
 		return in_array($value, $this->toValueArray());
 	}
 
 	/**
-	 * @return \Generator<string, LinkedListItem>
+	 * @return \Generator<ListValueType, LinkedListItem>
 	 */
 	private function iterate(): \Generator
 	{
 		if ($this->firstItem !== null) {
 			foreach ($this->firstItem->yieldWithNext() as $value => $item) {
-				assert(is_string($value));
-				
+				assert(is_int($value));
+
 				yield $value => $item;
 			}
 		}

@@ -1,6 +1,0 @@
-parameters:
-	ignoreErrors:
-		-
-			message: "#^Property List\\\\SortedLinked\\\\IntSortedLinkedList\\:\\:firstItem is defined as nullable, but null is never assigned$#"
-			count: 1
-			path: src/List/SortedLinked/IntSortedLinkedList.php

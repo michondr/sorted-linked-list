@@ -11,6 +11,7 @@ class LinkedListItem
 		private ?self $nextItem,
 	)
 	{
+		//TODO: add validation callback, fix tests
 	}
 
 	public function setNextItem(?LinkedListItem $nextItem): void
