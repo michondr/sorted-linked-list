@@ -358,7 +358,7 @@ class IntegerAscSortedLinkedListTest extends TestCase
     public function testRemoveWithNoItems(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('list does not have value 100');
+        $this->expectExceptionMessage('list does not have value "100"');
 
         $list = new IntegerAscSortedLinkedList();
 
@@ -368,7 +368,7 @@ class IntegerAscSortedLinkedListTest extends TestCase
     public function testRemoveWithMissingValue(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('list does not have value 100');
+        $this->expectExceptionMessage('list does not have value "100"');
 
         $list = new IntegerAscSortedLinkedList(
             new LinkedListItem(

@@ -76,7 +76,7 @@ abstract class AbstractSortedLinkedList
     public function remove($value): static
     {
         if ($this->hasValue($value) === false) {
-            throw new \InvalidArgumentException('list does not have value ' . $value);
+            throw new \InvalidArgumentException(sprintf('list does not have value "%s"', $value));
         }
 
         if ($this->firstItem !== null && $value === $this->firstItem->getValue()) {

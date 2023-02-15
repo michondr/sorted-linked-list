@@ -3,6 +3,7 @@ parameters:
     paths:
         - src
         - tests
+    treatPhpDocTypesAsCertain: false
 
 includes:
     - vendor/shipmonk/phpstan-rules/rules.neon
