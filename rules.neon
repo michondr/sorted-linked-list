@@ -4,6 +4,8 @@ parameters:
         - public
         - src
         - tests
+    parallel:
+        maximumNumberOfProcesses: 16
     treatPhpDocTypesAsCertain: false
 
 includes:

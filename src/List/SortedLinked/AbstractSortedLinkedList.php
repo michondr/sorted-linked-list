@@ -17,15 +17,18 @@ abstract class AbstractSortedLinkedList
     }
 
     /**
-     * @return array<ListValueType>
+     * @return array<int, ListValueType>
      */
     public function toValueArray(): array
     {
         $values = [];
 
-        foreach ($this->iterate() as $value => $item) {
-            $values[] = $value;
-        };
+        if ($this->firstItem !== null) {
+            /** @var ListValueType $value */
+            foreach ($this->firstItem->yieldWithNext() as $value) {
+                $values[] = $value;
+            }
+        }
 
         return $values;
     }
@@ -113,19 +116,5 @@ abstract class AbstractSortedLinkedList
     public function hasValue($value): bool
     {
         return in_array($value, $this->toValueArray());
-    }
-
-    /**
-     * @return \Generator<ListValueType, LinkedListItem>
-     */
-    private function iterate(): \Generator
-    {
-        if ($this->firstItem !== null) {
-            foreach ($this->firstItem->yieldWithNext() as $value => $item) {
-                assert(is_int($value));
-
-                yield $value => $item;
-            }
-        }
     }
 }

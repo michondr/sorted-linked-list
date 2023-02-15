@@ -11,25 +11,25 @@ class LinkedListItemTest extends TestCase
     public function getValueDataProvider(): Generator
     {
         yield 'negative max' => [
-            'value' => -PHP_INT_MAX
+            'value' => -PHP_INT_MAX,
         ];
         yield 'negative' => [
-            'value' => -20
+            'value' => -20,
         ];
         yield 'zero' => [
-            'value' => 0
+            'value' => 0,
         ];
         yield 'positive' => [
-            'value' => 100
+            'value' => 100,
         ];
         yield 'positive max' => [
-            'value' => PHP_INT_MAX
+            'value' => PHP_INT_MAX,
         ];
         yield 'string empty' => [
-            'value' => ''
+            'value' => '',
         ];
         yield 'string non-empty' => [
-            'value' => 'foobar'
+            'value' => 'foobar',
         ];
     }
 
@@ -77,11 +77,11 @@ class LinkedListItemTest extends TestCase
     {
         $item = new LinkedListItem(
             10,
-            $sub1 = new LinkedListItem(
+            new LinkedListItem(
                 'foo',
-                $sub2 = new LinkedListItem(
+                new LinkedListItem(
                     -42,
-                    $sub3 = new LinkedListItem(
+                    new LinkedListItem(
                         'bar',
                         null
                     )
@@ -90,12 +90,7 @@ class LinkedListItemTest extends TestCase
         );
 
         Assert::assertSame(
-            [
-                10 => $item,
-                3 => $sub1,
-                -42 => $sub2,
-                -100 => $sub3
-            ],
+            [10, 'foo', -42, 'bar'],
             iterator_to_array($item->yieldWithNext())
         );
     }

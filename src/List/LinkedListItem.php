@@ -18,15 +18,15 @@ class LinkedListItem
     }
 
     /**
-     * @return \Generator<int|string, LinkedListItem>
+     * @return \Generator<int|string>
      */
     public function yieldWithNext(): Generator
     {
-        yield $this->value => $this;
+        yield $this->value;
 
         if ($this->nextItem !== null) {
-            foreach ($this->nextItem->yieldWithNext() as $value => $next) {
-                yield $value => $next;
+            foreach ($this->nextItem->yieldWithNext() as $value) {
+                yield $value;
             }
         }
     }
