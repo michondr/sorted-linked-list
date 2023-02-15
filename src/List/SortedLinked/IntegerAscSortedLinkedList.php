@@ -17,5 +17,15 @@ final class IntegerAscSortedLinkedList extends AbstractSortedLinkedList
             new IntegerAscStrategy(),
             $firstItem,
         );
+
+        array_reduce(
+            $this->toValueArray(),
+            function (?int $previousValue, int $value) {
+                if ($previousValue !== null) {
+                    assert($previousValue > $value);
+                }
+                return $value;
+            },
+        );
     }
 }

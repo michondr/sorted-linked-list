@@ -32,36 +32,18 @@ class IntegerAscSortedLinkedListTest extends TestCase
             ),
             'expectedResult' => [-3, 0, 5],
         ];
-        yield 'descending list' => [
+        yield 'list with duplicate values in ascending order' => [
             'list' => new IntegerAscSortedLinkedList(
                 new LinkedListItem(
-                    10,
+                    -42,
                     new LinkedListItem(
-                        3,
+                        -42,
                         new LinkedListItem(
-                            -42,
+                            10,
                             new LinkedListItem(
-                                -100,
-                                null
-                            )
-                        )
-                    )
-                )
-            ),
-            'expectedResult' => [10, 3, -42, -100],
-        ];
-        yield 'list with duplicate values in descending order' => [
-            'list' => new IntegerAscSortedLinkedList(
-                new LinkedListItem(
-                    10,
-                    new LinkedListItem(
-                        3,
-                        new LinkedListItem(
-                            -42,
-                            new LinkedListItem(
-                                -42,
+                                20,
                                 new LinkedListItem(
-                                    -100,
+                                    20,
                                     null
                                 )
                             )
@@ -69,7 +51,7 @@ class IntegerAscSortedLinkedListTest extends TestCase
                     )
                 )
             ),
-            'expectedResult' => [10, 3, -42, -42, -100],
+            'expectedResult' => [-42, -42, 10, 20, 20],
         ];
     }
 
