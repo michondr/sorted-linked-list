@@ -294,6 +294,30 @@ class IntegerAscSortedLinkedListTest extends TestCase
 				)
 			)
 		];
+		yield 'remove duplicate' => [
+			'list' => new IntegerAscSortedLinkedList(
+				new LinkedListItem(
+					3,
+					new LinkedListItem(
+						3,
+						new LinkedListItem(
+							3,
+							null
+						)
+					)
+				)
+			),
+			'valueToRemove' => 3,
+			'expectedResult' => new IntegerAscSortedLinkedList(
+				new LinkedListItem(
+					3,
+					new LinkedListItem(
+						3,
+						null
+					)
+				)
+			)
+		];
 	}
 
 	/**
