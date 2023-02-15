@@ -7,7 +7,7 @@ use List\ValueComparison\ComparisonOutcomeEnum;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-class AscendingIntegerStrategyTest extends TestCase
+class IntegerAscStrategyTest extends TestCase
 {
 
 	public function compareValuesDataProvider(): Generator
@@ -17,12 +17,12 @@ class AscendingIntegerStrategyTest extends TestCase
 			'secondValue' => 1,
 			'expectedResult' => ComparisonOutcomeEnum::SAME
 		];
-		yield 'first value is higher' => [
+		yield 'first value is more' => [
 			'firstValue' => 3,
 			'secondValue' => 1,
 			'expectedResult' => ComparisonOutcomeEnum::MORE
 		];
-		yield 'second value is higher' => [
+		yield 'first value is less' => [
 			'firstValue' => -2,
 			'secondValue' => 1,
 			'expectedResult' => ComparisonOutcomeEnum::LESS
@@ -34,7 +34,7 @@ class AscendingIntegerStrategyTest extends TestCase
 	 */
 	public function testCompareValues(int $firstValue, int $secondValue, ComparisonOutcomeEnum $expectedResult): void
 	{
-		$strategy = new AscendingIntegerStrategy();
+		$strategy = new IntegerAscStrategy();
 
 		Assert::assertSame(
 			$expectedResult,

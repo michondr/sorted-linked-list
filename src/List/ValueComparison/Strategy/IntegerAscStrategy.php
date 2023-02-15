@@ -5,7 +5,7 @@ namespace List\ValueComparison\Strategy;
 use List\ValueComparison\ComparisonOutcomeEnum;
 use List\ValueComparison\ValueComparisonStrategyInterface;
 
-class AscendingIntegerStrategy implements ValueComparisonStrategyInterface
+class IntegerAscStrategy implements ValueComparisonStrategyInterface
 {
 
 	public function compareValues(mixed $first, mixed $second): ComparisonOutcomeEnum

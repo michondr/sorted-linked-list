@@ -3,20 +3,19 @@
 namespace List\SortedLinked;
 
 use List\LinkedListItem;
-use List\ValueComparison\Strategy\AscendingIntegerStrategy;
+use List\ValueComparison\Strategy\IntegerAscStrategy;
 
 /**
  * @extends \List\SortedLinked\AbstractSortedLinkedList<int>
  */
-final class AscIntSortedLinkedList extends AbstractSortedLinkedList
+final class IntegerAscSortedLinkedList extends AbstractSortedLinkedList
 {
-	//TODO: rename to type first, order second. dont forget strategies
 	public function __construct(
 		LinkedListItem $firstItem = null,
 	)
 	{
 		parent::__construct(
-			new AscendingIntegerStrategy(),
+			new IntegerAscStrategy(),
 			$firstItem,
 		);
 	}

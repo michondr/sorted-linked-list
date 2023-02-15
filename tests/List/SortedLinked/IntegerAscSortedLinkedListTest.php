@@ -8,19 +8,19 @@ use List\LinkedListItem;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-class IntSortedLinkedListTest extends TestCase
+class IntegerAscSortedLinkedListTest extends TestCase
 {
 
 	public function toValueDataProvider(): Generator
 	{
 		yield 'empty list' => [
-			'list' => new AscIntSortedLinkedList(
+			'list' => new IntegerAscSortedLinkedList(
 				null
 			),
 			'expectedResult' => [],
 		];
 		yield 'ascending list' => [
-			'list' => new AscIntSortedLinkedList(
+			'list' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -35,7 +35,7 @@ class IntSortedLinkedListTest extends TestCase
 			'expectedResult' => [-3, 0, 5]
 		];
 		yield 'descending list' => [
-			'list' => new AscIntSortedLinkedList(
+			'list' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					10,
 					new LinkedListItem(
@@ -53,7 +53,7 @@ class IntSortedLinkedListTest extends TestCase
 			'expectedResult' => [10, 3, -42, -100]
 		];
 		yield 'list with duplicate values in descending order' => [
-			'list' => new AscIntSortedLinkedList(
+			'list' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					10,
 					new LinkedListItem(
@@ -79,7 +79,7 @@ class IntSortedLinkedListTest extends TestCase
 	 * @dataProvider toValueDataProvider
 	 * @param array<int> $expectedResult
 	 */
-	public function testToValueArray(AscIntSortedLinkedList $list, array $expectedResult): void
+	public function testToValueArray(IntegerAscSortedLinkedList $list, array $expectedResult): void
 	{
 		Assert::assertSame(
 			$expectedResult,
@@ -89,7 +89,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testAddBefore(): void
 	{
-		$list = (new AscIntSortedLinkedList())
+		$list = (new IntegerAscSortedLinkedList())
 			->add(1)
 			->add(-3);
 
@@ -101,7 +101,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testAddAfter(): void
 	{
-		$list = (new AscIntSortedLinkedList())
+		$list = (new IntegerAscSortedLinkedList())
 			->add(1)
 			->add(5);
 
@@ -113,7 +113,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testAddDuplicate(): void
 	{
-		$listWithAddedItems = (new AscIntSortedLinkedList())
+		$listWithAddedItems = (new IntegerAscSortedLinkedList())
 			->add(1)
 			->add(1);
 
@@ -125,7 +125,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testAddGradually(): void
 	{
-		$list = new AscIntSortedLinkedList();
+		$list = new IntegerAscSortedLinkedList();
 
 		$list = $list->add(0);
 
@@ -173,7 +173,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testAddMultiple(): void
 	{
-		$list = (new AscIntSortedLinkedList())
+		$list = (new IntegerAscSortedLinkedList())
 			->add(1)
 			->add(1)
 			->add(0)
@@ -192,7 +192,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testHasValue(): void
 	{
-		$list = (new AscIntSortedLinkedList())
+		$list = (new IntegerAscSortedLinkedList())
 			->add(1)
 			->add(-100)
 			->add(30);
@@ -210,20 +210,20 @@ class IntSortedLinkedListTest extends TestCase
 	public function removeDataProvider(): Generator
 	{
 		yield 'list with single item' => [
-			'list' => new AscIntSortedLinkedList(
+			'list' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					3,
 					null
 				)
 			),
 			'valueToRemove' => 3,
-			'expectedResult' => new AscIntSortedLinkedList(
+			'expectedResult' => new IntegerAscSortedLinkedList(
 				null
 			)
 		];
 
 		yield 'remove from the start' => [
-			'list' => new AscIntSortedLinkedList(
+			'list' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -236,7 +236,7 @@ class IntSortedLinkedListTest extends TestCase
 				)
 			),
 			'valueToRemove' => -3,
-			'expectedResult' => new AscIntSortedLinkedList(
+			'expectedResult' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					0,
 					new LinkedListItem(
@@ -247,7 +247,7 @@ class IntSortedLinkedListTest extends TestCase
 			)
 		];
 		yield 'remove from the middle' => [
-			'list' => new AscIntSortedLinkedList(
+			'list' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -260,7 +260,7 @@ class IntSortedLinkedListTest extends TestCase
 				)
 			),
 			'valueToRemove' => 0,
-			'expectedResult' => new AscIntSortedLinkedList(
+			'expectedResult' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -271,7 +271,7 @@ class IntSortedLinkedListTest extends TestCase
 			)
 		];
 		yield 'remove from the end' => [
-			'list' => new AscIntSortedLinkedList(
+			'list' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -284,7 +284,7 @@ class IntSortedLinkedListTest extends TestCase
 				)
 			),
 			'valueToRemove' => 5,
-			'expectedResult' => new AscIntSortedLinkedList(
+			'expectedResult' => new IntegerAscSortedLinkedList(
 				new LinkedListItem(
 					-3,
 					new LinkedListItem(
@@ -299,7 +299,7 @@ class IntSortedLinkedListTest extends TestCase
 	/**
 	 * @dataProvider removeDataProvider
 	 */
-	public function testRemove(AscIntSortedLinkedList $list, int $valueToRemove, AscIntSortedLinkedList $expectedResult): void
+	public function testRemove(IntegerAscSortedLinkedList $list, int $valueToRemove, IntegerAscSortedLinkedList $expectedResult): void
 	{
 		Assert::assertNotEquals(
 			$list,
@@ -316,7 +316,7 @@ class IntSortedLinkedListTest extends TestCase
 
 	public function testRemoveMultiple(): void
 	{
-		$list = (new AscIntSortedLinkedList())
+		$list = (new IntegerAscSortedLinkedList())
 			->add(1)
 			->add(1)
 			->add(2)
@@ -329,7 +329,7 @@ class IntSortedLinkedListTest extends TestCase
 			->remove(2)
 			->remove(-10);
 
-		$expectedList = new AscIntSortedLinkedList(
+		$expectedList = new IntegerAscSortedLinkedList(
 			new LinkedListItem(
 				1,
 				new LinkedListItem(
@@ -353,7 +353,7 @@ class IntSortedLinkedListTest extends TestCase
 		$this->expectException(\InvalidArgumentException::class);
 		$this->expectExceptionMessage('list does not have value 100');
 
-		$list = new AscIntSortedLinkedList();
+		$list = new IntegerAscSortedLinkedList();
 
 		$list->remove(100);
 	}
@@ -363,7 +363,7 @@ class IntSortedLinkedListTest extends TestCase
 		$this->expectException(\InvalidArgumentException::class);
 		$this->expectExceptionMessage('list does not have value 100');
 
-		$list = new AscIntSortedLinkedList(
+		$list = new IntegerAscSortedLinkedList(
 			new LinkedListItem(
 				20,
 				null
