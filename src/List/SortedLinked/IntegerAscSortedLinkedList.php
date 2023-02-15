@@ -10,14 +10,12 @@ use List\ValueComparison\Strategy\IntegerAscStrategy;
  */
 final class IntegerAscSortedLinkedList extends AbstractSortedLinkedList
 {
-	public function __construct(
-		LinkedListItem $firstItem = null,
-	)
-	{
-		parent::__construct(
-			new IntegerAscStrategy(),
-			$firstItem,
-		);
-	}
-
+    public function __construct(
+        LinkedListItem $firstItem = null,
+    ) {
+        parent::__construct(
+            new IntegerAscStrategy(),
+            $firstItem,
+        );
+    }
 }
