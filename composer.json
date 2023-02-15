@@ -16,8 +16,9 @@
     },
     "scripts": {
         "phpstan": "vendor/bin/phpstan analyze -c rules.neon --xdebug",
-        "phpcbf": "vendor/bin/phpcbf --standard=PSR12 src tests",
-        "phpcs": "vendor/bin/phpcs --standard=PSR12 src tests",
-        "test": "vendor/bin/phpunit tests"
+        "phpcbf": "vendor/bin/phpcbf --standard=PSR12 public src tests",
+        "phpcs": "vendor/bin/phpcs --standard=PSR12 public src tests",
+        "test": "vendor/bin/phpunit tests",
+        "run": "php public/index.php"
     }
 }
