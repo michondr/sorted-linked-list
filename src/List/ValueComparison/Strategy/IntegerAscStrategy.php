@@ -15,7 +15,7 @@ class IntegerAscStrategy implements ValueComparisonStrategyInterface
     {
         if (!is_int($first) || !is_int($second)) {
             throw new \InvalidArgumentException(
-                sprintf('cannot compare "%s" with "%s", as one of them is not a string', $first, $second)
+                sprintf('cannot compare "%s" with "%s", as one of them is not an integer', $first, $second)
             );
         }
         return match ($first <=> $second) {
