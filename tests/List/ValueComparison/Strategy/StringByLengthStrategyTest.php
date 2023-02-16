@@ -21,12 +21,12 @@ class StringByLengthStrategyTest extends TestCase
             'secondValue' => 'a',
             'expectedResult' => ComparisonOutcomeEnum::EQUALS,
         ];
-        yield 'same strings are equal' => [
+        yield 'same strings with multibyte chars are equal' => [
             'firstValue' => 'Šmandalfe, ukážeš nám trik se špičatým kloboukem?',
-            'secondValue' => 'Šmandalfe, ukážeš nám trik se špičatým kloboukem?',
+            'secondValue' => 'Lorem ipsum dolor sit amet, consectetur adipiscin',
             'expectedResult' => ComparisonOutcomeEnum::EQUALS,
         ];
-        yield 'first sentence is longer' => [
+        yield 'first value is longer' => [
             'firstValue' => 'violet',
             'secondValue' => 'blue',
             'expectedResult' => ComparisonOutcomeEnum::MORE,

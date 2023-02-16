@@ -22,7 +22,7 @@ class StringByLengthStrategy implements ValueComparisonStrategyInterface
             );
         }
 
-        return match (strlen($first) <=> strlen($second)) {
+        return match (mb_strlen($first) <=> mb_strlen($second)) {
             -1 => ComparisonOutcomeEnum::LESS,
             0 => ComparisonOutcomeEnum::EQUALS,
             1 => ComparisonOutcomeEnum::MORE,
