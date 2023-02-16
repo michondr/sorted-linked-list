@@ -8,36 +8,103 @@ use PHPUnit\Framework\TestCase;
 
 class ComparisonOutcomeEnumTest extends TestCase
 {
-    public function testIsLessOrEqual(): void
-    {
-        $more = ComparisonOutcomeEnum::MORE;
-        $same = ComparisonOutcomeEnum::EQUALS;
-        $less = ComparisonOutcomeEnum::LESS;
+    private const IS_LESS_OR_EQUAL = true;
+    private const IS_NOT_LESS_OR_EQUAL = false;
 
-        Assert::assertFalse($more->isLessOrEqual());
-        Assert::assertTrue($same->isLessOrEqual());
-        Assert::assertTrue($less->isLessOrEqual());
+    private const IS_SAME = true;
+    private const IS_NOT_SAME = false;
+
+    private const IS_MORE = true;
+    private const IS_NOT_MORE = false;
+
+    public function isLessOrEqualDataProvider(): Generator
+    {
+        yield 'more' => [
+            'outcome' => ComparisonOutcomeEnum::MORE,
+            'expectedIsLessOrEqual' => self::IS_NOT_LESS_OR_EQUAL,
+
+        ];
+        yield 'equals' => [
+            'outcome' => ComparisonOutcomeEnum::EQUALS,
+            'expectedIsLessOrEqual' => self::IS_LESS_OR_EQUAL,
+
+        ];
+        yield 'less' => [
+            'outcome' => ComparisonOutcomeEnum::LESS,
+            'expectedIsLessOrEqual' => self::IS_LESS_OR_EQUAL,
+
+        ];
     }
 
-    public function testIsSame(): void
+    /**
+     * @dataProvider isLessOrEqualDataProvider
+     */
+    public function testIsLessOrEqual(ComparisonOutcomeEnum $outcome, bool $expectedIsLessOrEqual): void
     {
-        $more = ComparisonOutcomeEnum::MORE;
-        $same = ComparisonOutcomeEnum::EQUALS;
-        $less = ComparisonOutcomeEnum::LESS;
-
-        Assert::assertFalse($more->isSame());
-        Assert::assertTrue($same->isSame());
-        Assert::assertFalse($less->isSame());
+        Assert::assertSame(
+            $expectedIsLessOrEqual,
+            $outcome->isLessOrEqual(),
+        );
     }
 
-    public function testIsMore(): void
+    public function isSameDataProvider(): Generator
     {
-        $more = ComparisonOutcomeEnum::MORE;
-        $same = ComparisonOutcomeEnum::EQUALS;
-        $less = ComparisonOutcomeEnum::LESS;
+        yield 'more' => [
+            'outcome' => ComparisonOutcomeEnum::MORE,
+            'expectedIsSame' => self::IS_NOT_SAME,
 
-        Assert::assertTrue($more->isMore());
-        Assert::assertFalse($same->isMore());
-        Assert::assertFalse($less->isMore());
+        ];
+        yield 'equals' => [
+            'outcome' => ComparisonOutcomeEnum::EQUALS,
+            'expectedIsSame' => self::IS_SAME,
+
+        ];
+        yield 'less' => [
+            'outcome' => ComparisonOutcomeEnum::LESS,
+            'expectedIsSame' => self::IS_NOT_SAME,
+
+        ];
+    }
+
+    /**
+     * @dataProvider isSameDataProvider
+     */
+    public function testIsSame(ComparisonOutcomeEnum $outcome, bool $expectedIsSame): void
+    {
+        Assert::assertSame(
+            $expectedIsSame,
+            $outcome->isSame(),
+        );
+    }
+
+
+    public function isMoreDataProvider(): Generator
+    {
+        yield 'more' => [
+            'outcome' => ComparisonOutcomeEnum::MORE,
+            'expectedIsMore' => self::IS_MORE,
+
+        ];
+        yield 'equals' => [
+            'outcome' => ComparisonOutcomeEnum::EQUALS,
+            'expectedIsMore' => self::IS_NOT_MORE,
+
+        ];
+        yield 'less' => [
+            'outcome' => ComparisonOutcomeEnum::LESS,
+            'expectedIsMore' => self::IS_NOT_MORE,
+
+        ];
+    }
+
+    /**
+     * @dataProvider isMoreDataProvider
+     */
+    public function testIsMore(ComparisonOutcomeEnum $outcome, bool $expectedIsMore): void
+    {
+        Assert::assertSame(
+            $expectedIsMore,
+            $outcome->isMore(),
+        );
     }
 }
